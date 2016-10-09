@@ -11,7 +11,8 @@ public:
 	{};
 
 	int n, m;
-	//std::vector<std::vector<int> >grid;
+	
+	//type of Matrix using vectors source::cppref
 	typedef std::vector<int> Row;
 	typedef std::vector<Row> Matrix;
 	Matrix grid;
