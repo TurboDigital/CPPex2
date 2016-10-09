@@ -30,7 +30,7 @@ int main(int argc, char * argv[])
 {
 	Engine e(argc, argv, 600, 600);
 
-	Grid grid(10,10);
+	Grid grid(12,12);
     
 
 	GraphicEngine * ge = new MyGraphicEngine(&grid);

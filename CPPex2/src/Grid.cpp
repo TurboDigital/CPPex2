@@ -14,7 +14,7 @@ void Grid::draw() {
 	float squareSizeX = (float)(2.0 / n); //to check later if the frame is not a square
 	float squareSizeY = (float)(2.0 / m);
 	float x = -1.0f;
-	float y = 0.8f;	//FillRect draw from LEFT DOWN corner to RIGHT UP
+	float y = 1.0f - squareSizeY;	//FillRect draw from LEFT DOWN corner to RIGHT UP
 
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
