@@ -1,4 +1,4 @@
 # CPPex2
-TP3 Ex2 done
+UNice M1 C++ Lab
 
 This is Lab#3 Ex2 using the singleton from my teacher.
