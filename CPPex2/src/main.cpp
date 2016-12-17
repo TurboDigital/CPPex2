@@ -28,9 +28,9 @@
 
 int main(int argc, char * argv[])
 {
-	Engine e(argc, argv, 600, 600);
+	Engine e(argc, argv, 800, 600);
 
-	Grid grid(12,12);
+	Grid grid(14,14);
     
 
 	GraphicEngine * ge = new MyGraphicEngine(&grid);

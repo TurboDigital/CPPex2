@@ -167,6 +167,7 @@
     <ClInclude Include="src\MyGraphicEngine.h" />
     <ClInclude Include="src\Stopwatch.h" />
     <ClInclude Include="src\TextureManager.h" />
+    <ClInclude Include="src\Turn.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

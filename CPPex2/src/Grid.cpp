@@ -2,12 +2,84 @@
 #include <sstream>
 #include <string.h>
 
-int Grid::getEl(int i, int j) {
+void Grid::initGrid() {
+	//TO-DO read from a file paths and path[N]
+	int paths = 5;
+	int path[12] = {0,4,5,4,5,7,12,7,12,2,2,2};
+	int lines = 0;
+	for (int k = 0; k < paths; k++) {
+		
+		int startX = path[lines];
+		int startY = path[lines + 1];
+		int endX = path[lines + 2];
+		int endY = path[lines + 3];
+
+		if (startX == endX) {
+			if (startX < endY) {
+				for (startY; startY <= endY; startY++)
+					grid[startY][startX] = ROAD;
+			}
+			else {
+				for (startY; startY >= endY; startY--)
+					grid[startY][startX] = ROAD;
+			}
+		}
+		if (startY == endY) {
+			if (startX < endX) {
+				for (startX; startX <= endX; startX++)
+					grid[startY][startX] = ROAD;
+			}
+			else {
+				for (startX; startX >= endX; startX--)
+					grid[startY][startX] = ROAD;
+			}
+			
+		}
+		lines += 2;
+	}
+	
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < m; j++) {
+			if (grid[i][j] == ROAD){
+				addTurnPlaces(i, j);
+			}
+				
+		}
+	}
+
+	grid[12][5] = TURN;
+
+}
+
+bool Grid::checkNoneCase(int i, int j) {
+	if (i < 0 || j >= m || i > 10 || j < 0) return false;
+	if (grid[i][j] == NONE) {
+		grid[i][j] = TURN;
+		return true;
+	}
+	return false;
+}
+
+void Grid::addTurnPlaces(int i, int j) {
+	checkNoneCase(i - 1, j - 1);
+	checkNoneCase(i - 1, j);
+	checkNoneCase(i - 1, j + 1);
+	checkNoneCase(i, j - 1);
+	checkNoneCase(i, j + 1);
+	checkNoneCase(i + 1, j - 1);
+	checkNoneCase(i + 1, j);
+	checkNoneCase(i + 1, j + 1);
+}
+
+Grid::CreatureType Grid::getEl(int i, int j) {
 	return grid[i][j];
 }
 
-void Grid::setEl(int i, int j, int val) {
-	grid[i][j] = val;
+bool Grid::addNewTurn(int i, int j) {
+	if (turnArray.size() == turnLimit)
+		return false;
+	//turnArray.insert(&Turn(i, j));
+	
 }
 
 void Grid::draw() {
@@ -15,7 +87,14 @@ void Grid::draw() {
 	float squareSizeY = (float)(2.0 / m);
 	float x = -1.0f;
 	float y = 1.0f - squareSizeY;	//FillRect draw from LEFT DOWN corner to RIGHT UP
-
+	for (int i = 0; i < turnArray.size(); i++) {
+		int tX = turnArray[i][0];
+		int tY = turnArray[i][1];
+		float rx = x + (tX*squareSizeX);	//x axis + j*(size of square 0.0 .. 0.x x<0.9)
+		float ry = y - (tY*squareSizeY);	//y axis + i*(size of square 0.0 .. 0.x x<0.9)
+		GraphicPrimitives::drawFillRect2D(rx, ry, squareSizeX, squareSizeY, 1.0f, 1.0f, 1.0f);
+	}
+	/*
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
 			if (grid[i][j] >= 1) {
@@ -36,5 +115,7 @@ void Grid::draw() {
 
 			}
 		}
+		
 	}
+	*/
 }
