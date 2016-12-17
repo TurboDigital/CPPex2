@@ -33,7 +33,7 @@ void MyGraphicEngine::Draw() {
 			if (objet == Grid::CreatureType::TREE)
 				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 1.0f, 0.0f, 1.0f);
 			if (objet == Grid::CreatureType::TURN)
-				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 1.0f, 0.0f, 1.0f);
+				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 1.0f, 1.0f, 1.0f);
 			if (objet == Grid::CreatureType::ROAD)
 				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 0.0f, 0.1f, 1.0f);
 			if (objet == Grid::CreatureType::NONE)

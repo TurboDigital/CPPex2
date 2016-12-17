@@ -1,6 +1,7 @@
 #pragma once
 #include "GraphicPrimitives.h"
 #include "Turn.h"
+#include <memory>
 
 class Grid {
 
@@ -10,35 +11,50 @@ public:
 		m(m_),
 		grid(n, Row(m)),
 		squareSize(0.2f),
-		turnArray(turnLimit)
+		turnStorage(),
+		selectedXPos(0.0f),
+		selectedYPos(0.0f),
+		isSelected(false)
 	{
 		initGrid();
 	};
-	// NxM matrix
-	int n, m;
-	float squareSize;
-	int turnLimit = 10;
 
+	virtual ~Grid() {};
+	
 	enum CreatureType {
 		NONE,
 		TURN,
 		ROAD,
 		TREE,
-		ROCK
+		ROCK,
+		BUY_TURN
 	};
+
+	// NxM matrix
+	int n, m;
+	float squareSize;
+
+	bool isSelected;
+	float selectedXPos;
+	float selectedYPos;
+	
 	//type of Matrix using vectors source::cppref
 	typedef std::vector<CreatureType> Row;
 	typedef std::vector<Row> Matrix;
 	Matrix grid;
-
-	std::vector<Turn> turnArray;
+	
+	typedef std::vector<std::shared_ptr<Turn>> Turns;
+	Turns turnStorage;
 
 	void initGrid();
 
 	CreatureType getEl(int i, int j);
-	bool checkNoneCase(int i, int j);
+	void checkNoneCaseAndAddTurn(int i, int j);
 	void addTurnPlaces(int i, int j);
 	bool addNewTurn(int i, int j);
 	void draw();
+
+	//insert new Turn in TurnStorage
+	void storeTurn(std::shared_ptr<Turn> const& turn);
 
 };

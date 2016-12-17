@@ -28,7 +28,7 @@
 
 int main(int argc, char * argv[])
 {
-	Engine e(argc, argv, 800, 600);
+	Engine e(argc, argv, 600, 600);
 
 	Grid grid(14,14);
     

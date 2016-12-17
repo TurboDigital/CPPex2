@@ -153,6 +153,7 @@
     <ClCompile Include="src\MyGameEngine.cpp" />
     <ClCompile Include="src\MyGraphicEngine.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\Turn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ControlEngine.h" />
@@ -171,6 +172,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="sprites\turn.bmp" />
+    <Image Include="sprites\turn2.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
