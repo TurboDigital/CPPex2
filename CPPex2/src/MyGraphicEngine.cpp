@@ -39,16 +39,11 @@ void MyGraphicEngine::Draw() {
 			if (objet == Grid::CreatureType::NONE)
 				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 1.0f, 1.0f, 1.0f);
 
-			/*if (j % 2 == 0 && i % 2 == 0 || j % 2 != 0 && i % 2 != 0) {
-				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 1.0f, 0.0f, 1.0f);
-			}
-			else {
-				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 0.0f, 1.0f, 0.0f);
-			}*/
-
 		}
 	}
 
 	grid->draw();
+	turnStorage->forEachDraw();
+	monstreStorage->forEachDraw();
 
 }

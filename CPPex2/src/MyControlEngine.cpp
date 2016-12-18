@@ -16,6 +16,7 @@ void MyControlEngine::MouseCallback(int button, int state, int x , int y) {
 		Grid::CreatureType caseType = grid->getEl(caseY, caseX);
 		
 		//TO DO: onClick and put turns
+		//DONE
 		if (caseType == Grid::CreatureType::BUY_TURN) {
 			grid->isSelected = true;
 		}
@@ -28,17 +29,17 @@ void MyControlEngine::MouseCallback(int button, int state, int x , int y) {
 		if (caseX == -1)caseX = 0;
 		Grid::CreatureType caseType = grid->getEl(caseY, caseX);
 		if (caseType == Grid::CreatureType::TURN) {
-			bool added = grid->addNewTurn(caseX, caseY);
-			if (!added)std::printf("The case %d and %d are not allowed", caseX, caseY);
+			turnStorage->addTurn(std::make_shared<Turn>(Turn(caseX, caseY, grid->getN(), grid->getM(), 1.0f, 0.0f, 1.0f)));
+			grid->removeTurnFromVirtual(caseX, caseY);
 		}
 		grid->isSelected = false;
-
 	}
 }
 
 void MyControlEngine::MotionCallback(int x, int y){
 
 	//TO DO: onClick and put turns
+	//DONE
 	if (grid->isSelected) {
 
 		int width = glutGet(GLUT_WINDOW_WIDTH);

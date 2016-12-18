@@ -54,6 +54,7 @@ void Grid::checkNoneCaseAndAddTurn(int i, int j) {
 	if (i >= 0 && j <= m && i < 10 && j >= 0) {
 		if (grid[i][j] == NONE) {
 			grid[i][j] = TURN;
+			virtualTurnStorage.addTurn(std::make_shared<Turn>(Turn(j, i, n, m, 0.80f, 0.80f, 0.80f)));
 		}
 	}
 }
@@ -73,17 +74,15 @@ Grid::CreatureType Grid::getEl(int i, int j) {
 	return grid[i][j];
 }
 
-
-void Grid::storeTurn(std::shared_ptr<Turn> const& turn) {
-	turnStorage.push_back(turn);
+void Grid::removeTurnFromVirtual(int i, int j) {
+	virtualTurnStorage.removeTurn(i, j);
 }
 
-bool Grid::addNewTurn(int i, int j) {
-	//if (turnStorage.size() == turnLimit)
-	//	return false;
-	storeTurn(std::make_shared<Turn>(Turn(i, j)));
-	std::printf("the size = %d", turnStorage.size());
-	return true;
+int Grid::getN() {
+	return n;
+}
+int Grid::getM() {
+	return m;
 }
 
 void Grid::draw() {
@@ -93,33 +92,15 @@ void Grid::draw() {
 	float y = 1.0f - squareSizeY;	//FillRect draw from LEFT DOWN corner to RIGHT UP
 	
 	if (isSelected) {
-
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				if (grid[i][j] == TURN)
-					GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 0.80f, 0.80f, 0.80f);
-			}
-		}
+		virtualTurnStorage.forEachDraw();
 
 		float rx = selectedXPos;
 		float ry = selectedYPos;
-		std::printf("pos x = %lf pos y = %lf \n", rx, ry);
+		std::printf("pos x = %lf pos y = %lf visual size = %d \n", rx, ry, virtualTurnStorage.getSize());
 		GraphicPrimitives::drawFillRect2D(rx, ry, squareSizeX, squareSizeY, 1.0f, 0.0f, 1.0f);
-
 
 	}
 
-	for (unsigned int i = 0; i < turnStorage.size(); i++) {
-		int tX = turnStorage[i].get()->getI();
-		int tY = turnStorage[i].get()->getJ();
-		float rx = x + (tY*squareSizeX);	//x axis + j*(size of square 0.0 .. 0.x x<0.9)
-		float ry = y - (tX*squareSizeY);	//y axis + i*(size of square 0.0 .. 0.x x<0.9)
-		
-		GraphicPrimitives::drawFillRect2D(rx, ry, squareSizeX, squareSizeY, 1.0f, 0.0f, 1.0f);
-		//TO DO textures
-		//GraphicPrimitives::drawSpritedRect2D(rx, ry, squareSizeX, squareSizeY, 0, 0, new TextureManager("sprites/turn2.bmp",32,32));
-	}
-	
 	/*
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {

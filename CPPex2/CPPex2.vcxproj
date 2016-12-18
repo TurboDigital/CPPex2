@@ -149,11 +149,14 @@
     <ClCompile Include="src\GraphicPrimitives.cpp" />
     <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Monstre.cpp" />
+    <ClCompile Include="src\MonstreStorage.cpp" />
     <ClCompile Include="src\MyControlEngine.cpp" />
     <ClCompile Include="src\MyGameEngine.cpp" />
     <ClCompile Include="src\MyGraphicEngine.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Turn.cpp" />
+    <ClCompile Include="src\TurnStorage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ControlEngine.h" />
@@ -163,12 +166,15 @@
     <ClInclude Include="src\GraphicPrimitives.h" />
     <ClInclude Include="src\Grid.h" />
     <ClInclude Include="src\libGraphicInclude.h" />
+    <ClInclude Include="src\Monstre.h" />
+    <ClInclude Include="src\MonstreStorage.h" />
     <ClInclude Include="src\MyControlEngine.h" />
     <ClInclude Include="src\MyGameEngine.h" />
     <ClInclude Include="src\MyGraphicEngine.h" />
     <ClInclude Include="src\Stopwatch.h" />
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\Turn.h" />
+    <ClInclude Include="src\TurnStorage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

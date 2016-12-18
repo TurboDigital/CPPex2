@@ -31,11 +31,13 @@ int main(int argc, char * argv[])
 	Engine e(argc, argv, 600, 600);
 
 	Grid grid(14,14);
-    
+	TurnStorage turnStorage(0);
+	MonstreStorage monstreStorage(0);
+	monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 0.9f, 100, 14, 14, 7.0f, 7.0f, 0.0f)));
 
-	GraphicEngine * ge = new MyGraphicEngine(&grid);
-	GameEngine * gme = new MyGameEngine(&grid);
-	ControlEngine * ce = new MyControlEngine(&grid);
+	GraphicEngine * ge = new MyGraphicEngine(&grid, &turnStorage, &monstreStorage);
+	GameEngine * gme = new MyGameEngine(&grid, &turnStorage, &monstreStorage);
+	ControlEngine * ce = new MyControlEngine(&grid,&turnStorage);
 
 	e.setGameEngine(gme);
 	e.setControlEngine(ce);

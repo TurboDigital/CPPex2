@@ -2,13 +2,21 @@
 
 #include "Engine.h"
 #include "Grid.h"
+#include "TurnStorage.h"
+#include "MonstreStorage.h"
 
 class MyGameEngine : public GameEngine {
-	//to see what should I do for chess table	
+	
 	Grid * grid;
+	TurnStorage * turnStorage;
+	MonstreStorage * monstreStorage;
 
 public:
-	MyGameEngine(Grid * grid_):grid(grid_) {};
+	MyGameEngine(Grid * grid_, TurnStorage * turnStorage_, MonstreStorage * monstreStorage_):
+		grid(grid_),
+		turnStorage(turnStorage_),
+		monstreStorage(monstreStorage_)
+		{};
 
 	virtual void idle();
 };
