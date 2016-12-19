@@ -33,7 +33,9 @@ int main(int argc, char * argv[])
 	Grid grid(14,14);
 	TurnStorage turnStorage(0);
 	MonstreStorage monstreStorage(0);
-	monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 0.9f, 100, 14, 14, 7.0f, 7.0f, 0.0f)));
+	monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 0.9f, 100, 0.0009f, 14, 14, 7.0f, 7.0f, 0.0f)));
+	monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 1.0f, 100, 0.0009f, 14, 14, 7.0f, 7.0f, 0.0f)));
+	monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 1.1f, 100, 0.0009f, 14, 14, 7.0f, 7.0f, 0.0f)));
 
 	GraphicEngine * ge = new MyGraphicEngine(&grid, &turnStorage, &monstreStorage);
 	GameEngine * gme = new MyGameEngine(&grid, &turnStorage, &monstreStorage);

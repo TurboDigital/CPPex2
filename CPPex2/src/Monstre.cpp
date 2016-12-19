@@ -23,46 +23,58 @@ void Monstre::move() {
 	int endX = path[lines + 2];
 	int endY = path[lines + 3];
 	
-	float startPointX = -1.0f + squareSizeX * (startY) + (squareSizeX / 2.0f);
-	float startPointY = 1.0f - squareSizeY * (startX) - (squareSizeX / 2.0f);
+	float endPointX = -1.0f + squareSizeX * (endY);
+	float endPointY = 1.0f - squareSizeY * (endX);
 	
-	float endPointX = -1.0f + squareSizeX * (endY) + (squareSizeX / 2.0f);
-	float endPointY = 1.0f - squareSizeY * (endX) - (squareSizeX / 2.0f);
 	
-	if(!change){
-		if (startX == endX) {
-			if (startX < endY) {
-					// Y axis
-					vx = 0.001f;
-					change = true;
+	if (startX == endX) {
+		if (startX < endY) {
+			// X axis
+			if (!change) {
+				vx = speed;
+				change = true;
 			}
-			else {
-					// -X axis
-					vy = -0.001f;
-					change = true;
-			}
+			endPointX += squareSizeX / 2 - squareSizeX / 4;
 		}
-		if (startY == endY) {
-			if (startX < endX) {
-					// X axis
-					vy = -0.001f;
-					change = true;
+		else {
+				// -X axis
+			if (!change) {
+				vx = -speed;
+				change = true;
 			}
-			else {
-					// -Y axis
-					vx = 0.001f;
-					change = true;
-			}
+			endPointX -= squareSizeX / 2 + squareSizeX / 4;
 		}
 	}
+	if (startY == endY) {
+		if (startX < endX) {
+			// -Y axis
+			if (!change) {
+				vy = -speed;
+				change = true;
+			}
+			endPointY -= squareSizeY - squareSizeY / 4;
+		}
+		else {
+				// Y axis
+			if (!change) {
+				vy = speed;
+				change = true;
+			}
+			endPointY += squareSizeY + squareSizeY / 4;
+		}
+	}
+
+
 	
 	x += vx;
 	y += vy;
 
-	if (y > endPointY - squareSizeY / 2 && y < endPointY) {
+	if ((y > endPointY - squareSizeY && y < endPointY) && (x > endPointX && x < endPointX + squareSizeX)) {
 		lines += 2;
 		vx = 0.0f;
 		vy = 0.0f;
 		change = false;
+		if (lines > 8)
+			change = true;
 	}
 }

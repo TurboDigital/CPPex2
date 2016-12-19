@@ -6,6 +6,5 @@ void MyGameEngine::idle() {
 	//monstreStorage->addMonstre();
 	//wait one second
 	monstreStorage->forEachMove();
-	
-
+	turnStorage->forEachAttack();
 }
