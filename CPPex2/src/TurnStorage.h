@@ -17,6 +17,8 @@ public:
 
 	void forEachDraw();
 
+	void forEachDrawBullets();
+
 	void forEachAttack();
 
 	int getSize();

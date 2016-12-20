@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\ControlEngine.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="src\Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\Config.h" />
     <ClInclude Include="src\ControlEngine.h" />
     <ClInclude Include="src\Engine.h" />

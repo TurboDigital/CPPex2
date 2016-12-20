@@ -23,9 +23,7 @@ public:
 		virtualTurnStorage(0),
 		selectedXPos(0.0f),	selectedYPos(0.0f),
 		isSelected(false)
-	{
-		drawStartMenu();
-	}
+	{}
 
 	Wave * wave;
 	Path * path;
@@ -39,6 +37,8 @@ public:
 	bool gameOver;
 
 	void draw();
+	void pauseDraw();
+	void startDraw();
 
 	//GRID import
 
@@ -73,7 +73,6 @@ public:
 	void addTurnPlaces(int i, int j);
 
 	void loadLevel(int level_);
-	void drawStartMenu();
 	void setStartMenu();
 
 };

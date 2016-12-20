@@ -15,14 +15,19 @@ void MyGraphicEngine::Draw() {
 			*					*
 	(-1,-1)	*********************(1,-1)
 	*/
-	if (!game->pause && !game->gameOver) {
+	if (game->gameStarted && !game->gameOver) {
 		game->draw();
 		turnStorage->forEachDraw();
-	}else if (!game->gameStarted) {
-		game->drawStartMenu();
-	}else if(game->wave != NULL){
-		game->wave->monstreStorage.forEachDraw();
+		turnStorage->forEachDrawBullets();
+		if (game->wave != NULL)game->wave->monstreStorage.forEachDraw();
+		if (game->pause) {
+			game->pauseDraw();
+		}
 	}
+	if (!game->gameStarted) {
+		game->startDraw();
+	}
+	
 	
 
 }

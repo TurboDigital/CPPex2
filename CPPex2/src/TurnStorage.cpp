@@ -14,6 +14,14 @@ void TurnStorage::forEachDraw() {
 	}
 }
 
+void TurnStorage::forEachDrawBullets() {
+	for (unsigned int i = 0; i < turns.size(); i++) {
+		for (unsigned int j = 0; j < turns[i].get()->bullets.size(); j++) {
+			turns[i].get()->bullets[j]->draw();
+		}
+	}
+}
+
 void TurnStorage::forEachAttack() {
 	for (unsigned int i = 0; i < turns.size(); i++) {
 		turns[i].get()->attack();

@@ -90,10 +90,15 @@ void Game::draw() {
 			Game::CreatureType objet = grid[i][j];
 			if (objet == ROAD)
 				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 0.4f, 0.4f, 0.4f);
-			if (objet == MAIN_MENU || objet == TURN)
+			if (objet == MAIN_MENU || objet == TURN || objet == NONE)
 				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 0.2f, 0.2f, 0.4f);
+			if (objet == BUY_TURN)
+				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 0.8f, 0.4f, 0.8f);
+
 		}
 	}
+	//GraphicPrimitives::drawText2D("TT", 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+
 
 	if (isSelected) {
 		virtualTurnStorage.forEachDraw();
@@ -111,15 +116,15 @@ void Game::draw() {
 
 void Game::loadLevel(int level_) {
 	if(level == 1)initGrid();
-	//drawCreatures();
 }
 
-void Game::drawStartMenu() {
-	
-	char charNumber[] = "TT";
-	//draw the number of clicks
-	GraphicPrimitives::drawText2D(charNumber, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	//GraphicPrimitives::drawText2D("START game", 0.0f, 0.0f, 1.0f, .0f, .0f);
+void Game::startDraw() {
+	GraphicPrimitives::drawText2D("START GAME", 0.0f, 0.0f, 1.0f, .0f, .0f);
+	std::printf("DRAW START\n");
+}
+
+void Game::pauseDraw() {
+	GraphicPrimitives::drawText2D("PAUSED", 0.0f, 0.0f, 1.0f, .0f, .0f);
 }
 
 void Game::setStartMenu() {

@@ -9,6 +9,7 @@ void MyGameEngine::idle() {
 	
 	if (!game->pause) {
 		turnStorage->forEachAttack();
+		turnStorage->forEachAttack();
 		if (game->wave != NULL) {
 			game->wave->createWave();
 			game->wave->monstreStorage.forEachMove();

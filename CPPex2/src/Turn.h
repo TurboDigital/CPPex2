@@ -1,5 +1,8 @@
 #pragma once
 #include "GraphicPrimitives.h"
+#include "Bullet.h"
+#include <vector>
+#include <memory>
 
 class Turn {
 public:
@@ -16,6 +19,12 @@ public:
 	{};
 
 	virtual ~Turn() {};
+
+	int fire_rate = 70;
+	int freq = 0;
+
+	typedef std::vector<std::shared_ptr<Bullet>> Bullets;
+	Bullets bullets;
 
 	int i, j, n, m;
 	float r, g, b;
