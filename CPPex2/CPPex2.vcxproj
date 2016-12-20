@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="src\ControlEngine.cpp" />
     <ClCompile Include="src\Engine.cpp" />
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameEngine.cpp" />
     <ClCompile Include="src\GraphicEngine.cpp" />
     <ClCompile Include="src\GraphicPrimitives.cpp" />
@@ -154,13 +155,17 @@
     <ClCompile Include="src\MyControlEngine.cpp" />
     <ClCompile Include="src\MyGameEngine.cpp" />
     <ClCompile Include="src\MyGraphicEngine.cpp" />
+    <ClCompile Include="src\Path.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Turn.cpp" />
     <ClCompile Include="src\TurnStorage.cpp" />
+    <ClCompile Include="src\Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Config.h" />
     <ClInclude Include="src\ControlEngine.h" />
     <ClInclude Include="src\Engine.h" />
+    <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameEngine.h" />
     <ClInclude Include="src\GraphicEngine.h" />
     <ClInclude Include="src\GraphicPrimitives.h" />
@@ -171,10 +176,12 @@
     <ClInclude Include="src\MyControlEngine.h" />
     <ClInclude Include="src\MyGameEngine.h" />
     <ClInclude Include="src\MyGraphicEngine.h" />
+    <ClInclude Include="src\Path.h" />
     <ClInclude Include="src\Stopwatch.h" />
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\Turn.h" />
     <ClInclude Include="src\TurnStorage.h" />
+    <ClInclude Include="src\Wave.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

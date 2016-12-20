@@ -26,20 +26,23 @@
 #include "MyGameEngine.h"
 #include "MyGraphicEngine.h"
 
+
+
 int main(int argc, char * argv[])
 {
-	Engine e(argc, argv, 600, 600);
-
-	Grid grid(14,14);
+	Path path;
+	Game game(&path);
 	TurnStorage turnStorage(0);
-	MonstreStorage monstreStorage(0);
-	monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 0.9f, 100, 0.0009f, 14, 14, 7.0f, 7.0f, 0.0f)));
-	monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 1.0f, 100, 0.0009f, 14, 14, 7.0f, 7.0f, 0.0f)));
-	monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 1.1f, 100, 0.0009f, 14, 14, 7.0f, 7.0f, 0.0f)));
+	MonstreStorage monstreStorage;
 
-	GraphicEngine * ge = new MyGraphicEngine(&grid, &turnStorage, &monstreStorage);
-	GameEngine * gme = new MyGameEngine(&grid, &turnStorage, &monstreStorage);
-	ControlEngine * ce = new MyControlEngine(&grid,&turnStorage);
+	//monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 0.9f, 100, 0.0009f, 14, 14, 7.0f, 7.0f, 0.0f)));
+	//monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 1.0f, 100, 0.0009f, 14, 14, 7.0f, 7.0f, 0.0f)));
+	//monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 1.1f, 100, 0.0009f, 14, 14, 7.0f, 7.0f, 0.0f)));
+
+	Engine e(argc, argv, game.window_width, game.window_height);
+	GraphicEngine * ge = new MyGraphicEngine(&turnStorage, &monstreStorage, &game);
+	GameEngine * gme = new MyGameEngine(&turnStorage, &monstreStorage, &game);
+	ControlEngine * ce = new MyControlEngine(&turnStorage, &game);
 
 	e.setGameEngine(gme);
 	e.setControlEngine(ce);

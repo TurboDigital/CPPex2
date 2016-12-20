@@ -118,7 +118,7 @@ void GraphicPrimitives::drawOutlinedPolygone2D(std::vector<float>& x,std::vector
     glColor4f (r,g,b,a);
     glBegin (GL_LINES);
     
-    for (int i=0; i < x.size()-1; i++) {
+    for (unsigned int i=0; i < x.size()-1; i++) {
         glVertex3f (x[i],y[i],0);
         glVertex3f (x[i+1],y[i+1],0);
     }
@@ -140,7 +140,7 @@ void GraphicPrimitives::drawFillPolygone2D(std::vector<float>& x,std::vector<flo
     glBegin (GL_TRIANGLES);
     
     
-    for (int i=0; i < x.size()-2; i++) {
+    for (unsigned int i=0; i < x.size()-2; i++) {
         glVertex3f (x[i],y[i],0);
         glVertex3f (x[i+1],y[i+1],0);
         glVertex3f (x[i+2],y[i+2],0);
@@ -155,7 +155,7 @@ void GraphicPrimitives::drawFillPolygone2D(std::vector<float>& x,std::vector<flo
     
     
     
-    for (int i=0; i < x.size()-1; i++) {
+    for (unsigned int i=0; i < x.size()-1; i++) {
         glVertex3f (x[i],y[i],0);
         glVertex3f (x[i+1],y[i+1],0);
     }
@@ -173,7 +173,7 @@ void GraphicPrimitives::drawText2D(char * str,float x,float y,float r,float g, f
     glPushAttrib(GL_CURRENT_BIT);
     //on doit definir la couleur avant la fonction RasterPos sinon elle ne sera pas prise en compte ...
     glColor4f(r,g,b,a);
-    glRasterPos2f( x,y) ;
+    glRasterPos2f(x,y) ;
     // Draw your text
     for (unsigned int i=0;i<strlen(str);i++){
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,*(str+i));

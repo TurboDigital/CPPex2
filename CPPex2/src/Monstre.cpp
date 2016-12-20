@@ -11,17 +11,13 @@ void Monstre::draw() {
 }
 void Monstre::move() {
 
-	// float squareSizeX = (float)(2.0 / n); //to check later if the frame is not a square
-	// float squareSizeY = (float)(2.0 / m);
-
-	// int path[12] = { 0,4,5,4,5,7,12,7,12,2,2,2 };
 	int width = glutGet(GLUT_WINDOW_WIDTH);
 	int height = glutGet(GLUT_WINDOW_HEIGHT);
 
-	int startX = path[lines];
-	int startY = path[lines + 1];
-	int endX = path[lines + 2];
-	int endY = path[lines + 3];
+	int startX = path->path[lines];
+	int startY = path->path[lines + 1];
+	int endX = path->path[lines + 2];
+	int endY = path->path[lines + 3];
 	
 	float endPointX = -1.0f + squareSizeX * (endY);
 	float endPointY = 1.0f - squareSizeY * (endX);

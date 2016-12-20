@@ -4,18 +4,19 @@
 #include "Grid.h"
 #include "TurnStorage.h"
 #include "MonstreStorage.h"
+#include "Game.h"
 
 class MyGraphicEngine:public GraphicEngine {
 	
-	Grid * grid;
 	TurnStorage * turnStorage;
 	MonstreStorage * monstreStorage;
+	Game * game;
 
 public:
-	MyGraphicEngine(Grid * grid_, TurnStorage * turnStorage_, MonstreStorage * monstreStorage_):
-		grid(grid_),
+	MyGraphicEngine(TurnStorage * turnStorage_, MonstreStorage * monstreStorage_, Game * game_):
 		turnStorage(turnStorage_),
-		monstreStorage(monstreStorage_)
+		monstreStorage(monstreStorage_),
+		game(game_)
 		{}
 
 	virtual void Draw();

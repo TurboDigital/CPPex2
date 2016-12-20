@@ -6,7 +6,7 @@
 class MonstreStorage {
 
 public:
-	MonstreStorage(int i):monstres(i) {
+	MonstreStorage():monstres() {
 
 	}
 
@@ -19,6 +19,7 @@ public:
 	void forEachMove();
 
 	int getSize();
+
 
 private:
 	Storage monstres;

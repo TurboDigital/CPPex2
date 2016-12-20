@@ -5,13 +5,13 @@ void MonstreStorage::addMonstre(std::shared_ptr<Monstre> const& monstre) {
 }
 
 void MonstreStorage::forEachDraw() {
-	for (unsigned int i = 0; i < monstres.size(); i++) {
+	for (unsigned int i = 0; i < (int)monstres.size(); i++) {
 		monstres[i].get()->draw();
 	}
 }
 
 void MonstreStorage::forEachMove() {
-	for (unsigned int i = 0; i < monstres.size(); i++) {
+	for (unsigned int i = 0; i < (int)monstres.size(); i++) {
 		monstres[i].get()->move();
 	}
 }

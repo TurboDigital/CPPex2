@@ -1,38 +1,33 @@
 #include "MyControlEngine.h"
 #include <math.h>
+#include <string.h>
 
 void MyControlEngine::MouseCallback(int button, int state, int x , int y) {
 	//to do mouse clicks
 	int width = glutGet(GLUT_WINDOW_WIDTH);
 	int height = glutGet(GLUT_WINDOW_HEIGHT);
 
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+	//find the case [i][j] from grid: translation from the frame to Matrix
+	int caseX = (unsigned int)trunc((game->m - (height - y) / (height / game->m)) - 1);
+	int caseY = (unsigned int)trunc((game->n - (width - x) / (width / game->n)) - 1);
+	if (caseX == -1)caseX = 0;
 
-		//find the case [i][j] from grid: translation from the frame to Matrix
-		int caseX = (unsigned int)trunc((grid->m - (height - y) / (height / grid->m)) - 1);
-		int caseY = (unsigned int)trunc((grid->n - (width - x) / (width / grid->n)) - 1);
-		if (caseX == -1)caseX = 0;
-		
-		Grid::CreatureType caseType = grid->getEl(caseY, caseX);
-		
+	Game::CreatureType caseType = game->getEl(caseY, caseX);
+
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 		//TO DO: onClick and put turns
 		//DONE
-		if (caseType == Grid::CreatureType::BUY_TURN) {
-			grid->isSelected = true;
+		if (caseType == Game::CreatureType::BUY_TURN) {
+			game->isSelected = true;
 		}
 		
 	}
 
-	if (state == GLUT_UP && grid->isSelected) {
-		int caseX = (unsigned int)trunc((grid->m - (height - y) / (height / grid->m)) - 1);
-		int caseY = (unsigned int)trunc((grid->n - (width - x) / (width / grid->n)) - 1);
-		if (caseX == -1)caseX = 0;
-		Grid::CreatureType caseType = grid->getEl(caseY, caseX);
-		if (caseType == Grid::CreatureType::TURN) {
-			turnStorage->addTurn(std::make_shared<Turn>(Turn(caseX, caseY, grid->getN(), grid->getM(), 1.0f, 0.0f, 1.0f)));
-			grid->removeTurnFromVirtual(caseX, caseY);
+	if (state == GLUT_UP && game->isSelected) {
+		if (caseType == Game::CreatureType::TURN) {
+			turnStorage->addTurn(std::make_shared<Turn>(Turn(caseX, caseY, game->n, game->m, 1.0f, 0.0f, 1.0f)));
 		}
-		grid->isSelected = false;
+		game->isSelected = false;
 	}
 }
 
@@ -40,19 +35,35 @@ void MyControlEngine::MotionCallback(int x, int y){
 
 	//TO DO: onClick and put turns
 	//DONE
-	if (grid->isSelected) {
+	if (game->isSelected) {
 
 		int width = glutGet(GLUT_WINDOW_WIDTH);
 		int height = glutGet(GLUT_WINDOW_HEIGHT);
 
-		float squareSizeX = (float)(2.0 / grid->n); //to check later if the frame is not a square
-		float squareSizeY = (float)(2.0 / grid->m);
+		float squareSizeX = (float)(2.0 / game->n); //to check later if the frame is not a square
+		float squareSizeY = (float)(2.0 / game->m);
 
-		int caseX = (unsigned int)trunc((grid->m - (height - y) / (height / grid->m)) - 1);
-		int caseY = (unsigned int)trunc((grid->n - (width - x) / (width / grid->n)) - 1);
+		int caseX = (unsigned int)trunc((game->m - (height - y) / (height / game->m)) - 1);
+		int caseY = (unsigned int)trunc((game->n - (width - x) / (width / game->n)) - 1);
 		if (caseX == -1)caseX = 0;
 
-		grid->selectedXPos = (float)(x / (width / 2.0f) - 1.0f) - squareSizeX / 2.0f;
-		grid->selectedYPos = (float)-(y / (height / 2.0f) - 1.0f) - squareSizeY / 2.0f;
+		game->selectedXPos = (float)(x / (width / 2.0f) - 1.0f) - squareSizeX / 2.0f;
+		game->selectedYPos = (float)-(y / (height / 2.0f) - 1.0f) - squareSizeY / 2.0f;
 	}
+}
+
+void MyControlEngine::KeyboardCallback(unsigned char key, int x, int y) {
+
+	if (key == 'p') {
+		game->pause = !game->pause;
+		std::printf("PAUSE");
+	}
+	else if (key == 'g' && game->wave == NULL) {
+		std::printf("GOGOGO");
+		game->loadLevel(1);
+		game->wave = new Wave(game->level,game->path);
+		game->countMonstres = game->wave->monstreCount;
+		game->gameStarted = true;
+	}
+	
 }

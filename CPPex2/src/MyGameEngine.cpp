@@ -5,6 +5,14 @@ void MyGameEngine::idle() {
 	//to do idle
 	//monstreStorage->addMonstre();
 	//wait one second
-	monstreStorage->forEachMove();
-	turnStorage->forEachAttack();
+	//monstreStorage->forEachMove();
+	
+	if (!game->pause) {
+		turnStorage->forEachAttack();
+		if (game->wave != NULL) {
+			game->wave->createWave();
+			game->wave->monstreStorage.forEachMove();
+		}
+	}
+	
 }
