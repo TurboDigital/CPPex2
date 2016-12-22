@@ -2,9 +2,6 @@
 
 void MyGraphicEngine::Draw() {
 
-	//GraphicPrimitives::drawLine2D(0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f);
-
-	//GraphicPrimitives::drawFillTriangle2D(0.0f, 0.0f, -0.05f, -0.05f, 0.05f, -0.05f, 0.0f, 0.0f, 1.0f);
 	/*
 	coords of the frame
 	(-1,1)	*********************(1,1)
@@ -23,9 +20,16 @@ void MyGraphicEngine::Draw() {
 		if (game->pause) {
 			game->pauseDraw();
 		}
+		if (game->nextLevelMenu) {
+			game->goToNextLevelDraw();
+		}
 	}
+	
 	if (!game->gameStarted) {
 		game->startDraw();
+	}
+	if (game->gameOver) {
+		game->gameOverDraw();
 	}
 	
 	

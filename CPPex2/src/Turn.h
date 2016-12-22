@@ -1,12 +1,18 @@
 #pragma once
 #include "GraphicPrimitives.h"
 #include "Bullet.h"
+#include "Game.h"
 #include <vector>
 #include <memory>
 
+
 class Turn {
+
+	Game * game;
+
 public:
-	Turn(int iPos,int jPos, int nN, int mM,float r_, float g_, float b_) :
+	Turn(Game * game_, int iPos,int jPos, int nN, int mM,float r_, float g_, float b_) :
+		game(game_),
 		i(iPos),
 		j(jPos),
 		n(nN),

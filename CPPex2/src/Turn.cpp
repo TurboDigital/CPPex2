@@ -1,4 +1,5 @@
 #include "Turn.h"
+#include <math.h>
 
 int Turn::getI() {
 	return i;
@@ -32,21 +33,56 @@ void Turn::draw(){
 }
 
 void Turn::attack() {
+	
 	//TO DO Attack
-	for (int k = 0; k < bullets.size(); k++) {
+
+	//clear bullets that are arrived
+	for (unsigned int k = 0; k < bullets.size(); k++) {
 		if (bullets[k]->dead) {
-			bullets.erase(bullets.begin()+k);
+			bullets.erase(bullets.begin() + k);
 		}
 	}
+
+	MonstreStorage::Storage monstresAround = game->getMonstersAround(i, j);
+
 	Bullet * bullet = NULL;
-	if (freq%fire_rate == 0) {
-		float sizeX = (float)(2.0 / n);
-		float sizeY = (float)(2.0 / m);
-		float x = -1.0f + sizeX*j + sizeX/2.0f;
-		float y = 1.0f - sizeY*i - sizeY/2.0f;
-		bullets.push_back(std::make_shared<Bullet>(Bullet(x,y,0.001f,0.0f,x+0.2,y,0.01)));
-		freq = 0;
+	float sizeX = (float)(2.0 / n);
+	float sizeY = (float)(2.0 / m);
+	float x = -1.0f + sizeX*j + sizeX / 2.0f;
+	float y = 1.0f - sizeY*i - sizeY / 2.0f;
+	if (freq <= 0) {
+		if(monstresAround.size()>=1){
+			int k = 0;
+			std::printf("MONSTRE %d", k);
+			std::printf("\t POSITION %lf %lf", monstresAround[k].get()->getX(), monstresAround[k].get()->getY());
+			float destinationX = monstresAround[k].get()->getX() + monstresAround[k].get()->getWidth() / 2;
+			float destinationY = monstresAround[k].get()->getY() + monstresAround[k].get()->getHeight() / 2;
+
+			float distance = sqrt(pow(destinationX - x, 2) + pow(destinationY - y, 2));
+			float directionX = ((destinationX - x) / distance) / 500;
+			float directionY = ((destinationY - y) / distance) / 500;
+
+
+			bullets.push_back(std::make_shared<Bullet>(Bullet(x, y, directionX, directionY, destinationX, destinationY, distance, 0.01f, 100)));
+			freq = 60;
+		}
+	
+		/*for (int k = 0; k < monstresAround.size(); k++) {
+
+		std::printf("MONSTRE %d", k);
+		std::printf("\t POSITION %lf %lf", monstresAround[k].get()->getX(), monstresAround[k].get()->getY());
+		float destinationX = monstresAround[k].get()->getX() + monstresAround[k].get()->getWidth() / 2;
+		float destinationY = monstresAround[k].get()->getY() + monstresAround[k].get()->getHeight() / 2;
+
+		float distance = sqrt(pow(destinationX - x, 2) + pow(destinationY - y, 2));
+		float directionX = ((destinationX - x) / distance) / 500;
+		float directionY = ((destinationY - y) / distance) / 500;
+			
+			
+		}/**/
+
+	
 	}
-	freq++;
+	freq--;
 
 }

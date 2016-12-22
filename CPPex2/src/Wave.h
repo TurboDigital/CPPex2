@@ -17,6 +17,10 @@ public:
 	int frequence;
 	MonstreStorage monstreStorage;
 
-	void createWave();
+	void createWave(int level, int life_, float speed_, int armor);
+	void setDamage(Monstre * monstre_, int damage_);
+
+	bool isEmpty();
+	int getArrivedMonsters();
 
 };

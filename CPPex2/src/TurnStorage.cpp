@@ -35,3 +35,7 @@ void TurnStorage::removeTurn(int i, int j) {
 		}
 	}
 }
+
+void TurnStorage::removeAllTurns() {
+	turns.clear();
+}

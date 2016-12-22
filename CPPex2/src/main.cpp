@@ -25,23 +25,23 @@
 #include "MyControlEngine.h"
 #include "MyGameEngine.h"
 #include "MyGraphicEngine.h"
+#include "GameEventsObserver.h"
+#include "LoadGame.h"
 
 
 
 int main(int argc, char * argv[])
 {
-	Path path;
-	Game game(&path);
-	TurnStorage turnStorage(0);
-	MonstreStorage monstreStorage;
 
-	//monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 0.9f, 100, 0.0009f, 14, 14, 7.0f, 7.0f, 0.0f)));
-	//monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 1.0f, 100, 0.0009f, 14, 14, 7.0f, 7.0f, 0.0f)));
-	//monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(-0.4f, 1.1f, 100, 0.0009f, 14, 14, 7.0f, 7.0f, 0.0f)));
+	LoadGame load(2,5);
+	Game game(&load);
+	TurnStorage turnStorage(&game);
+	MonstreStorage monstreStorage;
+	GameEventsObserver observer(&game, &turnStorage);
 
 	Engine e(argc, argv, game.window_width, game.window_height);
 	GraphicEngine * ge = new MyGraphicEngine(&turnStorage, &monstreStorage, &game);
-	GameEngine * gme = new MyGameEngine(&turnStorage, &monstreStorage, &game);
+	GameEngine * gme = new MyGameEngine(&turnStorage, &monstreStorage, &game, &observer);
 	ControlEngine * ce = new MyControlEngine(&turnStorage, &game);
 
 	e.setGameEngine(gme);

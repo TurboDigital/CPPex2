@@ -2,16 +2,14 @@
 
 void MyGameEngine::idle() {
 
-	//to do idle
-	//monstreStorage->addMonstre();
-	//wait one second
-	//monstreStorage->forEachMove();
-	
 	if (!game->pause) {
-		turnStorage->forEachAttack();
+		observer->collisions();
+		observer->verifyGameState();
 		turnStorage->forEachAttack();
 		if (game->wave != NULL) {
-			game->wave->createWave();
+			game->wave->createWave(game->level, game->loadGame->getLife(game->level-1), game->loadGame->getSpeed(game->level-1), game->loadGame->getArmor(game->level-1));
+			game->lifes -= game->wave->getArrivedMonsters();
+			game->wave->monstreStorage.deleteDeadMonsters();
 			game->wave->monstreStorage.forEachMove();
 		}
 	}

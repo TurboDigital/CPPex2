@@ -4,52 +4,44 @@
 #include "Wave.h"
 #include "Path.h"
 #include "Monstre.h"
-#include "Turn.h"
-#include "TurnStorage.h"
-
+#include "LoadGame.h"
 
 class Game {
-
 public:
-	Game(Path * path_) :
+	Game(LoadGame * load_) :
 		window_width(WINDOW_WIDTH),
 		window_height(WINDOW_HEIGHT),
-		pause(false),	gameOver(false),	gameStarted(false),
+		pause(false), gameOver(false), gameStarted(false), nextLevelMenu(false), chapterEnded(false),
 		countMonstres(0),
-		level(START_LEVEL),
-		wave(NULL),	path(path_), 
-		n(N),	m(M),
+		level(START_LEVEL), currentChapter(1),
+		wave(NULL), loadGame(load_),
+		n(N), m(M),
 		grid(n, Row(m)),
-		virtualTurnStorage(0),
-		selectedXPos(0.0f),	selectedYPos(0.0f),
-		isSelected(false)
+		selectedXPos(0.0f), selectedYPos(0.0f),
+		isSelected(false), lifes(1)
 	{}
 
 	Wave * wave;
-	Path * path;
+	LoadGame * loadGame;
 
-	int window_width;
-	int window_height;
-	int countMonstres;
-	int level;
-	bool pause;
-	bool gameStarted;
-	bool gameOver;
+	int window_width, window_height;
+	int countMonstres, lifes;
+	unsigned int currentChapter, level;
+	bool pause, gameStarted, chapterEnded, gameOver, nextLevelMenu;
 
 	void draw();
 	void pauseDraw();
 	void startDraw();
+	void gameOverDraw();
 
-	//GRID import
+	void levelComplete();
 
-	TurnStorage virtualTurnStorage;
+	//GRID imports
 
 	enum CreatureType {
 		NONE,
 		TURN,
 		ROAD,
-		TREE,
-		ROCK,
 		BUY_TURN,
 		MAIN_MENU
 	};
@@ -66,13 +58,22 @@ public:
 	typedef std::vector<Row> Matrix;
 	Matrix grid;
 
-	void initGrid();
+	//void initGrid();
 
 	CreatureType getEl(int i, int j);
 	void checkNoneCaseAndAddTurn(int i, int j);
 	void addTurnPlaces(int i, int j);
 
-	void loadLevel(int level_);
+	//void loadLevel(int level_);
 	void setStartMenu();
 
+	MonstreStorage::Storage getMonstersAround(int i, int j);
+	void dealDamageToAnMonsterFromWave(Monstre * monstre_, int damage_);
+
+	void goToNextLevelDraw();
+	bool loadNextLevel();
+	void loadPath(int * path, int pahts_);
+	Path * currentPath();
+	void restartGame();
+	void reloadCurrentPath();
 };

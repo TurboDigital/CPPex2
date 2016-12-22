@@ -147,9 +147,10 @@
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameEngine.cpp" />
+    <ClCompile Include="src\GameEventsObserver.cpp" />
     <ClCompile Include="src\GraphicEngine.cpp" />
     <ClCompile Include="src\GraphicPrimitives.cpp" />
-    <ClCompile Include="src\Grid.cpp" />
+    <ClCompile Include="src\LoadGame.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Monstre.cpp" />
     <ClCompile Include="src\MonstreStorage.cpp" />
@@ -169,10 +170,11 @@
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameEngine.h" />
+    <ClInclude Include="src\GameEventsObserver.h" />
     <ClInclude Include="src\GraphicEngine.h" />
     <ClInclude Include="src\GraphicPrimitives.h" />
-    <ClInclude Include="src\Grid.h" />
     <ClInclude Include="src\libGraphicInclude.h" />
+    <ClInclude Include="src\LoadGame.h" />
     <ClInclude Include="src\Monstre.h" />
     <ClInclude Include="src\MonstreStorage.h" />
     <ClInclude Include="src\MyControlEngine.h" />

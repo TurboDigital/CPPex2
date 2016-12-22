@@ -3,14 +3,15 @@
 
 class Path {
 public:
-	Path()
+	Path(int * path_, int paths_):
+		path(path_),
+		paths(paths_)
 	{};
 
 	virtual ~Path() {};
 
-	//TODO read from file
-	int paths = 5;
-	int path[12] = { 0,4,5,4,5,7,12,7,12,2,2,2 };
+	int paths;
+	int * path;
 
 	float getStartX();
 	float getStartY();

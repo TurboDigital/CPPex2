@@ -2,13 +2,17 @@
 #include <memory>
 #include <vector>
 #include "Turn.h"
+#include "Game.h"
+
 class TurnStorage {
 	
+	Game * game;
 	
 public:
-
-	TurnStorage(int i) :
-		turns(i) 
+	
+	TurnStorage(Game * game_) :
+		game(game_),
+		turns() 
 	{}
 
 	typedef std::vector<std::shared_ptr<Turn>> Storage;
@@ -23,8 +27,9 @@ public:
 
 	int getSize();
 
+	void removeAllTurns();
+
 	void removeTurn(int i, int j);
 
-private:
 	Storage turns;
 };

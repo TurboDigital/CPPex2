@@ -7,70 +7,103 @@ void Monstre::takeDamage(int damage) {
 void Monstre::draw() {
 	//TO DO Drawing
 	//std::printf("%lf %lf %lf %lf \n", x, y, vx, vy);
-	GraphicPrimitives::drawFillRect2D(x, y, squareSizeX / 2, squareSizeY / 2, r, g, b);
+	GraphicPrimitives::drawFillRect2D(x, y, getWidth(), getHeight(), r, g, b);
 }
 void Monstre::move() {
+	if (life <= 0)dead = true;
+	if (!dead) {
+		int width = glutGet(GLUT_WINDOW_WIDTH);
+		int height = glutGet(GLUT_WINDOW_HEIGHT);
 
-	int width = glutGet(GLUT_WINDOW_WIDTH);
-	int height = glutGet(GLUT_WINDOW_HEIGHT);
+		int startX = path->path[lines];
+		int startY = path->path[lines + 1];
+		int endX = path->path[lines + 2];
+		int endY = path->path[lines + 3];
 
-	int startX = path->path[lines];
-	int startY = path->path[lines + 1];
-	int endX = path->path[lines + 2];
-	int endY = path->path[lines + 3];
-	
-	float endPointX = -1.0f + squareSizeX * (endY);
-	float endPointY = 1.0f - squareSizeY * (endX);
-	
-	
-	if (startX == endX) {
-		if (startX < endY) {
-			// X axis
-			if (!change) {
-				vx = speed;
-				change = true;
+		float endPointX = -1.0f + squareSizeX * (endY);
+		float endPointY = 1.0f - squareSizeY * (endX);
+
+
+		if (startX == endX) {
+			if (startX < endY) {
+				// X axis
+				if (!change) {
+					vx = speed;
+					change = true;
+				}
+				endPointX += squareSizeX / 2 - squareSizeX / 4;
 			}
-			endPointX += squareSizeX / 2 - squareSizeX / 4;
-		}
-		else {
+			else {
 				// -X axis
-			if (!change) {
-				vx = -speed;
-				change = true;
+				if (!change) {
+					vx = -speed;
+					change = true;
+				}
+				endPointX -= squareSizeX / 2 + squareSizeX / 4;
 			}
-			endPointX -= squareSizeX / 2 + squareSizeX / 4;
 		}
-	}
-	if (startY == endY) {
-		if (startX < endX) {
-			// -Y axis
-			if (!change) {
-				vy = -speed;
-				change = true;
+		if (startY == endY) {
+			if (startX < endX) {
+				// -Y axis
+				if (!change) {
+					vy = -speed;
+					change = true;
+				}
+				endPointY -= squareSizeY - squareSizeY / 4;
 			}
-			endPointY -= squareSizeY - squareSizeY / 4;
-		}
-		else {
+			else {
 				// Y axis
-			if (!change) {
-				vy = speed;
-				change = true;
+				if (!change) {
+					vy = speed;
+					change = true;
+				}
+				endPointY += squareSizeY + squareSizeY / 4;
 			}
-			endPointY += squareSizeY + squareSizeY / 4;
+		}
+
+
+
+		x += vx;
+		y += vy;
+
+		if ((y > endPointY - squareSizeY && y < endPointY) && (x > endPointX && x < endPointX + squareSizeX)) {
+			lines += 2;
+			vx = 0.0f;
+			vy = 0.0f;
+			change = false;
+			if (lines > 8)
+				change = true;
+		}
+		/*
+		if (bulletX < monstreX + monstreW && bulletX + bulletW > monstreX &&
+		bulletY < monstreY + monstreH && bulletY + bulletW > monstreY)
+		*/
+		int endCaseX(path->path[path->paths * 2]), endCaseY(path->path[path->paths * 2 + 1]);
+		float squareX = -1.0f + squareSizeY * (endCaseY);
+		float squareY = 1.0f - squareSizeX * (endCaseX);
+		if (x < squareX + squareSizeX && x + getWidth() > squareX &&
+			y < squareY + squareSizeY && y + getHeight() > squareY) {
+			change = true;
+			arrived = true;
+			dead = true;
 		}
 	}
+}
 
+float Monstre::getX() {
+	return x;
+}
+float Monstre::getY() {
+	return y;
+}
+float Monstre::getWidth() {
+	return squareSizeX / 2.0f;
+}
 
-	
-	x += vx;
-	y += vy;
+float Monstre::getHeight() {
+	return squareSizeY / 2.0f;
+}
 
-	if ((y > endPointY - squareSizeY && y < endPointY) && (x > endPointX && x < endPointX + squareSizeX)) {
-		lines += 2;
-		vx = 0.0f;
-		vy = 0.0f;
-		change = false;
-		if (lines > 8)
-			change = true;
-	}
+void Monstre::setDamage(int damage_) {
+	life -= damage_;
 }

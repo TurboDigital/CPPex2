@@ -25,7 +25,7 @@ void MyControlEngine::MouseCallback(int button, int state, int x , int y) {
 
 	if (state == GLUT_UP && game->isSelected) {
 		if (caseType == Game::CreatureType::TURN) {
-			turnStorage->addTurn(std::make_shared<Turn>(Turn(caseX, caseY, game->n, game->m, 1.0f, 0.0f, 1.0f)));
+			turnStorage->addTurn(std::make_shared<Turn>(Turn(game,caseX, caseY, game->n, game->m, 1.0f, 0.0f, 1.0f)));
 		}
 		game->isSelected = false;
 	}
@@ -58,12 +58,30 @@ void MyControlEngine::KeyboardCallback(unsigned char key, int x, int y) {
 		game->pause = !game->pause;
 		std::printf("PAUSE");
 	}
-	else if (key == 'g' && game->wave == NULL) {
+	if (key == 'g' && game->wave == NULL) {
 		std::printf("GOGOGO");
-		game->loadLevel(1);
-		game->wave = new Wave(game->level,game->path);
-		game->countMonstres = game->wave->monstreCount;
-		game->gameStarted = true;
+		if (game->loadNextLevel()) {
+			game->wave = new Wave(game->level, game->currentPath());
+			game->countMonstres = game->wave->monstreCount;
+		}
 	}
-	
+	if (key == 'r' && game->wave != NULL) {
+		if (game->loadNextLevel()) {
+			game->wave = new Wave(game->level, game->currentPath());
+			game->countMonstres = game->wave->monstreCount;
+		}
+	}
+	if (key == 'n' && game->nextLevelMenu) {
+		if (game->loadNextLevel()) {
+			game->wave = new Wave(game->level, game->currentPath());
+			game->countMonstres = game->wave->monstreCount;
+			game->nextLevelMenu = false;
+		}
+	}
+	if (key == 'r' && game->gameOver) {
+		game->restartGame();
+		turnStorage->removeAllTurns();
+		std::printf("RESTART FROM GAME OVER \n");
+	}
+
 }

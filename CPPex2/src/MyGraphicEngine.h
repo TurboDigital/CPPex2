@@ -1,7 +1,6 @@
 #pragma once
 #include "Engine.h"
 #include "GraphicPrimitives.h"
-#include "Grid.h"
 #include "TurnStorage.h"
 #include "MonstreStorage.h"
 #include "Game.h"

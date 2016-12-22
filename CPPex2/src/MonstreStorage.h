@@ -18,10 +18,14 @@ public:
 
 	void forEachMove();
 
+	void deleteDeadMonsters();
+
+	int getArrivedMonsters();
+
 	int getSize();
 
+	void setDamage(Monstre * monstre_, int damage_);
 
-private:
 	Storage monstres;
 
 };
