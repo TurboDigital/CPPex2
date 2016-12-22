@@ -18,7 +18,7 @@ public:
 
 	void forEachMove();
 
-	void deleteDeadMonsters();
+	int deleteDeadMonsters();
 
 	int getArrivedMonsters();
 

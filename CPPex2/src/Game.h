@@ -5,20 +5,23 @@
 #include "Path.h"
 #include "Monstre.h"
 #include "LoadGame.h"
+#include <cstdio>
 
 class Game {
 public:
 	Game(LoadGame * load_) :
 		window_width(WINDOW_WIDTH),
 		window_height(WINDOW_HEIGHT),
-		pause(false), gameOver(false), gameStarted(false), nextLevelMenu(false), chapterEnded(false),
+		pause(false), gameOver(false), gameStarted(false), nextLevelMenu(false), chapterEnded(false), gameWin(false),
 		countMonstres(0),
 		level(START_LEVEL), currentChapter(1),
 		wave(NULL), loadGame(load_),
 		n(N), m(M),
 		grid(n, Row(m)),
 		selectedXPos(0.0f), selectedYPos(0.0f),
-		isSelected(false), lifes(1)
+		isSelected(false), lifes(20),
+		clickTowerI(-1), clickTowerJ(-1), clicked(false),
+		gold(START_GOLD)
 	{}
 
 	Wave * wave;
@@ -26,13 +29,19 @@ public:
 
 	int window_width, window_height;
 	int countMonstres, lifes;
-	unsigned int currentChapter, level;
-	bool pause, gameStarted, chapterEnded, gameOver, nextLevelMenu;
+	unsigned int currentChapter, level, gold;
+	bool pause, gameStarted, chapterEnded, gameOver, nextLevelMenu, gameWin;
+
+	int clickTowerI, clickTowerJ;
+	bool clicked;
 
 	void draw();
 	void pauseDraw();
 	void startDraw();
 	void gameOverDraw();
+	void gameWinDraw();
+	void drawSelected();
+	void drawSelectedInfo(int level_, int attack_, int attackRate_);
 
 	void levelComplete();
 
@@ -43,7 +52,9 @@ public:
 		TURN,
 		ROAD,
 		BUY_TURN,
-		MAIN_MENU
+		MAIN_MENU,
+		BOOST_UP,
+		BOOST_DOWN
 	};
 
 	// NxM matrix

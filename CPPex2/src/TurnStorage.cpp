@@ -39,3 +39,50 @@ void TurnStorage::removeTurn(int i, int j) {
 void TurnStorage::removeAllTurns() {
 	turns.clear();
 }
+
+void TurnStorage::drawBorders(int i, int j) {
+	for (unsigned int k = 0; k < turns.size(); k++) {
+		if (turns[k].get()->i == i && turns[k].get()->j == j) {
+			turns[k].get()->drawBorder();
+		}
+	}
+}
+
+void TurnStorage::upgradeTurn(int i, int j) {
+	for (unsigned int k = 0; k < turns.size(); k++) {
+		if (turns[k].get()->i == i && turns[k].get()->j == j) {
+			turns[k].get()->updateLevel();
+		}
+	}
+}
+
+int TurnStorage::getTurnAttack(int i, int j) {
+	for (unsigned int k = 0; k < turns.size(); k++) {
+		if (turns[k].get()->i == i && turns[k].get()->j == j) {
+			return turns[k].get()->getAttack();
+		}
+	}
+}
+int TurnStorage::getTurnAttackRate(int i, int j) {
+	for (unsigned int k = 0; k < turns.size(); k++) {
+		if (turns[k].get()->i == i && turns[k].get()->j == j) {
+			return turns[k].get()->getAttackRate();
+		}
+	}
+}
+int TurnStorage::getTurnLevel(int i, int j) {
+	for (unsigned int k = 0; k < turns.size(); k++) {
+		if (turns[k].get()->i == i && turns[k].get()->j == j) {
+			return turns[k].get()->getLevel();
+		}
+	}
+}
+
+bool TurnStorage::exists(int i, int j) {
+	for (unsigned int k = 0; k < turns.size(); k++) {
+		if (turns[k].get()->i == i && turns[k].get()->j == j) {
+			return true;
+		}
+	}
+	return false;
+}

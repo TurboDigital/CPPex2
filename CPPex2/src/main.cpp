@@ -36,13 +36,14 @@ int main(int argc, char * argv[])
 	LoadGame load(2,5);
 	Game game(&load);
 	TurnStorage turnStorage(&game);
+	TurnStorage virtualTurnStorage(&game);
 	MonstreStorage monstreStorage;
-	GameEventsObserver observer(&game, &turnStorage);
+	GameEventsObserver observer(&game, &turnStorage, &virtualTurnStorage);
 
 	Engine e(argc, argv, game.window_width, game.window_height);
-	GraphicEngine * ge = new MyGraphicEngine(&turnStorage, &monstreStorage, &game);
+	GraphicEngine * ge = new MyGraphicEngine(&turnStorage, &monstreStorage, &game, &observer);
 	GameEngine * gme = new MyGameEngine(&turnStorage, &monstreStorage, &game, &observer);
-	ControlEngine * ce = new MyControlEngine(&turnStorage, &game);
+	ControlEngine * ce = new MyControlEngine(&turnStorage, &game, &observer);
 
 	e.setGameEngine(gme);
 	e.setControlEngine(ce);

@@ -2,16 +2,19 @@
 #include "Engine.h"
 #include "TurnStorage.h"
 #include "MonstreStorage.h"
+#include "GameEventsObserver.h"
 #include "Game.h"
 
 class MyControlEngine : public ControlEngine {
 
 	TurnStorage * turnStorage;
+	GameEventsObserver * observer;
 	Game * game;
 
 public:
-	MyControlEngine(TurnStorage * turnStorage_, Game * game_):
+	MyControlEngine(TurnStorage * turnStorage_, Game * game_, GameEventsObserver * observer_):
 		turnStorage(turnStorage_),
+		observer(observer_),
 		game(game_)
 	{};
 

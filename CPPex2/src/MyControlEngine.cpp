@@ -19,15 +19,39 @@ void MyControlEngine::MouseCallback(int button, int state, int x , int y) {
 		//DONE
 		if (caseType == Game::CreatureType::BUY_TURN) {
 			game->isSelected = true;
+			observer->refreshVirtual();
+			observer->drawVirtual = true;
 		}
-		
+		else if (caseType == Game::CreatureType::TURN) {
+			if (turnStorage->exists(caseX, caseY)) {
+				game->clickTowerI = caseX;
+				game->clickTowerJ = caseY;
+				game->clicked = true;
+			}
+			else {
+				game->clicked = false;
+			}
+		}
+		else if (caseType == Game::CreatureType::BOOST_UP && game->clicked) {
+			if (game->gold >= 30) {
+				turnStorage->upgradeTurn(game->clickTowerI, game->clickTowerJ);
+				game->gold -= 30;
+			}
+		}
+		else if (game->clicked) {
+			game->clicked = false;
+		}
 	}
-
 	if (state == GLUT_UP && game->isSelected) {
+		
 		if (caseType == Game::CreatureType::TURN) {
-			turnStorage->addTurn(std::make_shared<Turn>(Turn(game,caseX, caseY, game->n, game->m, 1.0f, 0.0f, 1.0f)));
+			if (game->gold >= 50) {
+				turnStorage->addTurn(std::make_shared<Turn>(Turn(game, caseX, caseY, game->n, game->m, 1.0f, 0.0f, 1.0f)));
+				game->gold -= 50;
+			}
 		}
 		game->isSelected = false;
+		observer->drawVirtual = false;
 	}
 }
 
@@ -36,7 +60,7 @@ void MyControlEngine::MotionCallback(int x, int y){
 	//TO DO: onClick and put turns
 	//DONE
 	if (game->isSelected) {
-
+		observer->drawVirtual = true;
 		int width = glutGet(GLUT_WINDOW_WIDTH);
 		int height = glutGet(GLUT_WINDOW_HEIGHT);
 
@@ -58,7 +82,7 @@ void MyControlEngine::KeyboardCallback(unsigned char key, int x, int y) {
 		game->pause = !game->pause;
 		std::printf("PAUSE");
 	}
-	if (key == 'g' && game->wave == NULL) {
+	if (key == 'g' && !game->gameStarted && game->wave == NULL) {
 		std::printf("GOGOGO");
 		if (game->loadNextLevel()) {
 			game->wave = new Wave(game->level, game->currentPath());
@@ -82,6 +106,11 @@ void MyControlEngine::KeyboardCallback(unsigned char key, int x, int y) {
 		game->restartGame();
 		turnStorage->removeAllTurns();
 		std::printf("RESTART FROM GAME OVER \n");
+	}
+	if (key == 'r' && game->gameWin) {
+		game->restartGame();
+		turnStorage->removeAllTurns();
+		std::printf("RESTART FROM GAME WIN \n");
 	}
 
 }

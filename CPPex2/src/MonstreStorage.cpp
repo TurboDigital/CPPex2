@@ -30,12 +30,15 @@ void MonstreStorage::setDamage(Monstre * monstre_, int damage_) {
 	}
 }
 
-void MonstreStorage::deleteDeadMonsters() {
+int MonstreStorage::deleteDeadMonsters() {
+	int sum = 0;
 	for (unsigned int i = 0; i < (int)monstres.size(); i++) {
 		if (monstres[i].get()->dead) {
 			monstres.erase(monstres.begin() + i);
+			sum += 10;
 		}
 	}
+	return sum;
 }
 
 int MonstreStorage::getArrivedMonsters() {

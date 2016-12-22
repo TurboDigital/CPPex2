@@ -9,7 +9,7 @@ class Wave {
 public:
 	Wave(int monstreCount_, Path * path_) :
 		path(path_),
-		monstreCount(monstreCount_*MONSTRE_PER_LEFEL),
+		monstreCount(monstreCount_*MONSTRE_PER_LEVEL),
 		frequence(MONSTRE_WAVE_FREQUENCE)
 	{}
 	int counter = 0;

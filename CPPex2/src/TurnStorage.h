@@ -31,5 +31,15 @@ public:
 
 	void removeTurn(int i, int j);
 
+	void drawBorders(int i, int j);
+
+	void upgradeTurn(int i, int j);
+
+	bool exists(int i, int j);
+	
+	int getTurnAttack(int i, int j);
+	int getTurnAttackRate(int i, int j);
+	int getTurnLevel(int i, int j);
+
 	Storage turns;
 };

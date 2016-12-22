@@ -6,7 +6,6 @@ void Game::checkNoneCaseAndAddTurn(int i, int j) {
 	if (i >= 0 && j <= m && i < 10 && j >= 0) {
 		if (grid[i][j] == NONE || grid[i][j] == MAIN_MENU) {
 			grid[i][j] = TURN;
-			//virtualTurnStorage.addTurn(std::make_shared<Turn>(Turn(j, i, n, m, 0.80f, 0.80f, 0.80f)));
 		}
 	}
 }
@@ -42,27 +41,28 @@ void Game::draw() {
 			Game::CreatureType objet = grid[i][j];
 			if (objet == ROAD)
 				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 0.4f, 0.4f, 0.4f);
-			if (objet == MAIN_MENU || objet == TURN || objet == NONE)
+			if (objet == MAIN_MENU || objet == TURN)
 				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 0.2f, 0.2f, 0.4f);
 			if (objet == BUY_TURN)
 				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 0.8f, 0.4f, 0.8f);
-
+			if (objet == NONE || (objet == BOOST_UP && !clicked))
+				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 0.21f, 0.55f, 0.55f);
+			if (objet == BOOST_UP && clicked)
+				GraphicPrimitives::drawFillRect2D(x + (i*squareSizeX), y - (j*squareSizeY), squareSizeX, squareSizeY, 0.60f, 0.80f, 0.19f);
 		}
 	}
+	char pickGold[20];
+	sprintf_s(pickGold, "Gold %d", gold);
 	
-	if (isSelected) {
-		//virtualTurnStorage.forEachDraw();
+	GraphicPrimitives::drawText2D(pickGold, .45f, .6f, 1.0f, .84f, .0f);
+	GraphicPrimitives::drawText2D("BUY TURN (50g)", .45f, .3f, 1.0f, .96f, .93f);
+	
 
-		float rx = selectedXPos;
-		float ry = selectedYPos;
-		//std::printf("pos x = %lf pos y = %lf visual size = %d \n", rx, ry, virtualTurnStorage.getSize());
-		GraphicPrimitives::drawFillRect2D(rx, ry, squareSizeX, squareSizeY, 1.0f, 0.0f, 1.0f);
-
-	}
-
-	char buffer[30];
-	std::sprintf(buffer, "%d lives", lifes);
-	GraphicPrimitives::drawText2D(buffer, .7f, .9f, 0.62f, .32f, .17f);
+	char buffer[30], chapter[30];
+	sprintf_s(buffer, "%d lives", lifes);
+	sprintf_s(chapter, "Chapter %d Wave %d", currentChapter + 1, level);
+	GraphicPrimitives::drawText2D(buffer, .7f, .8f, 0.33f, .33f, .33f);
+	GraphicPrimitives::drawText2D(chapter, .45f, .9f, 0.69f, .13f, .13f);
 
 
 }
@@ -82,12 +82,21 @@ void Game::pauseDraw() {
 }
 
 void Game::goToNextLevelDraw() {
-	char buffer[20];
-	std::sprintf(buffer, "Level %d complete", level - 1);
-
+	char buffer[20], buffer1[20], buffer2[30];
+	if (level <= 5) {
+		sprintf_s(buffer, "Wave %d complete", level);
+		sprintf_s(buffer1, "CHAPTER %d ", currentChapter + 1);
+		sprintf_s(buffer2, "Next Wave: Press N ");
+	}
+	else{
+		sprintf_s(buffer, "CHAPTER %d complete", currentChapter + 1);
+		sprintf_s(buffer1, "");
+		sprintf_s(buffer2, "Continue: Press N");
+	}
 	GraphicPrimitives::drawFillRect2D(-1.0f, -1.0f, 2.0f, 2.0f, 0.2f, 0.2f, 0.4f, 1.0f);
-	GraphicPrimitives::drawText2D(buffer, -0.3f, 0.3f, 0.62f, .32f, .17f);
-	GraphicPrimitives::drawText2D("Next Level: Press N", -0.3f, 0.2f, 0.62f, .32f, .17f);
+	GraphicPrimitives::drawText2D(buffer1, -0.3f, 0.4f, .66f, .66f, .66f);
+	GraphicPrimitives::drawText2D(buffer, -0.3f, 0.3f, .66f, .66f, .66f);
+	GraphicPrimitives::drawText2D(buffer2, -0.3f, 0.2f, 0.62f, .32f, .17f);
 }
 
 void Game::gameOverDraw() {
@@ -96,16 +105,44 @@ void Game::gameOverDraw() {
 	GraphicPrimitives::drawText2D("Restart Game: Press R", -0.3f, 0.2f, 0.62f, .32f, .17f);
 	GraphicPrimitives::drawText2D("Quit Game: Press Q", -0.3f, 0.1f, 0.62f, .32f, .17f);
 }
+void Game::gameWinDraw() {
+	char buffer[20], buffer1[20], buffer2[30];
+	sprintf_s(buffer, "Dev: Cociu Victor");
+	sprintf_s(buffer1, "Congrats you won!");
+	sprintf_s(buffer2, "Main menu: Press R");
+	GraphicPrimitives::drawFillRect2D(-1.0f, -1.0f, 2.0f, 2.0f, 0.2f, 0.2f, 0.4f, 1.0f);
+	GraphicPrimitives::drawText2D(buffer1, -0.3f, 0.4f, .66f, .66f, .66f);
+	GraphicPrimitives::drawText2D(buffer, -0.3f, 0.3f, .66f, .66f, .66f);
+	GraphicPrimitives::drawText2D(buffer2, -0.3f, 0.2f, 0.62f, .32f, .17f);
+}
 
+void Game::drawSelectedInfo(int level_, int attack_, int attackRate_) {
+	char level[20];
+	char attack[20];
+	char rate[20];
+	sprintf_s(level, "Level %d", level_);
+	sprintf_s(attack, "Attack %d", attack_);
+	sprintf_s(rate, "Rate %d", attackRate_);
+	GraphicPrimitives::drawText2D("UPGRADE (30g)", .45f, -0.1f, 1.0f, .96f, .93f);
+	GraphicPrimitives::drawText2D(level, .65f, -0.2f, 1.0f, .96f, .93f);
+	GraphicPrimitives::drawText2D(attack, .65f, -0.3f, 1.0f, .96f, .93f);
+	GraphicPrimitives::drawText2D(rate, .65f, -0.4f, 1.0f, .96f, .93f);
+}
+
+void Game::drawSelected() {
+	float rx = selectedXPos;
+	float ry = selectedYPos;
+	GraphicPrimitives::drawFillRect2D(rx, ry, (float)(2.0 / n), (float)(2.0 / m), 1.0f, 0.0f, 1.0f);
+}
 void Game::setStartMenu() {
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
-			grid[i][j] = MAIN_MENU;
+			if(i>=10)grid[i][j] = NONE;
+			else grid[i][j] = MAIN_MENU;
 		}
 	}
-	grid[12][5] = BUY_TURN;
-	grid[12][6] = BUY_TURN;
-	grid[12][7] = BUY_TURN;
+	grid[11][5] = BUY_TURN;
+	grid[10][8] = BOOST_UP;
 }
 
 MonstreStorage::Storage Game::getMonstersAround(int i, int j) {
@@ -153,6 +190,7 @@ void Game::levelComplete() {
 }
 
 bool Game::loadNextLevel() {
+	nextLevelMenu = false;
 	setStartMenu();
 	if (!gameStarted) {
 		gameStarted = true;
@@ -162,11 +200,12 @@ bool Game::loadNextLevel() {
 	}
 	if (level == 6) {
 		chapterEnded = true;
+		nextLevelMenu = false;
 		level = 1;
 		currentChapter++;
 	}
 	if (currentChapter == MAX_CHAPTER) {
-		gameOver = true;// you won
+		gameWin = true;// you won
 	}
 	if (currentChapter < MAX_CHAPTER) {
 		reloadCurrentPath();
@@ -230,13 +269,18 @@ Path * Game::currentPath() {
 
 
 void Game::restartGame() {
-	gameStarted = true;
+	gameStarted = false;
 	pause = false;
 	gameOver = false;
 	chapterEnded = false;
+	nextLevelMenu = false;
+	gameWin = false;
+	delete wave;
+	wave = NULL;
 	level = 1;
 	currentChapter = 0;
 	lifes = 20;
 	setStartMenu();
 	reloadCurrentPath();
+	gold = START_GOLD;
 }

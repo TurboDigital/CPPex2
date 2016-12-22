@@ -30,13 +30,18 @@ void GameEventsObserver::collisionsBulletMonster(Turn * turn, int i, int j) {
 }
 
 void GameEventsObserver::verifyGameState() {
+	if (game->currentChapter == MAX_CHAPTER) {
+		game->gameWin = true;
+		game->nextLevelMenu = false;
+	}
 	if (game->lifes <= 0) {
 		game->gameOver = true;
 		game->pause = true;
 	}
-	if (game->chapterEnded) {
+	if (game->chapterEnded && !game->gameWin && !game->gameOver) {
 		game->loadNextLevel();
 		game->chapterEnded = false;
+		game->gold = START_GOLD;
 		turnStorage->removeAllTurns();
 	}
 	if (game->wave != NULL) {
@@ -45,3 +50,39 @@ void GameEventsObserver::verifyGameState() {
 		}
 	}
 }
+
+void GameEventsObserver::virtualDraw() {
+	virtualTrunStorage->forEachDraw();
+}
+
+void GameEventsObserver::refreshVirtual() {
+	virtualTrunStorage->removeAllTurns();
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < game->m; j++) {
+			if (game->grid[i][j] == Game::CreatureType::ROAD) {
+				addTurnPlaces(i, j);
+			}
+		}
+	}
+}
+
+void GameEventsObserver::addTurnPlaces(int i, int j) {
+	checkNoneCaseAndAddTurn(i - 1, j - 1);
+	checkNoneCaseAndAddTurn(i - 1, j);
+	checkNoneCaseAndAddTurn(i - 1, j + 1);
+	checkNoneCaseAndAddTurn(i, j - 1);
+	checkNoneCaseAndAddTurn(i, j + 1);
+	checkNoneCaseAndAddTurn(i + 1, j - 1);
+	checkNoneCaseAndAddTurn(i + 1, j);
+	checkNoneCaseAndAddTurn(i + 1, j + 1);
+}
+
+
+void GameEventsObserver::checkNoneCaseAndAddTurn(int i, int j) {
+	if (i >= 0 && j <= game->m && i < 10 && j >= 0) {
+		if (game->grid[i][j] == Game::CreatureType::TURN) {
+			virtualTrunStorage->addTurn(std::make_shared<Turn>(Turn(game,j, i, game->n, game->m, 0.23f, 0.70f, 0.44f, 0.6f)));
+		}
+	}
+}
+
