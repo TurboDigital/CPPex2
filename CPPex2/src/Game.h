@@ -53,8 +53,7 @@ public:
 		ROAD,
 		BUY_TURN,
 		MAIN_MENU,
-		BOOST_UP,
-		BOOST_DOWN
+		BOOST_UP
 	};
 
 	// NxM matrix

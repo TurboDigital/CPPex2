@@ -15,6 +15,10 @@ public:
 		turns() 
 	{}
 
+	~TurnStorage() {
+
+	}
+
 	typedef std::vector<std::shared_ptr<Turn>> Storage;
 
 	void addTurn(std::shared_ptr<Turn> const& turn);

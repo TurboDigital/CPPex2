@@ -149,14 +149,6 @@
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="sprites\turn.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="sprites\turn2.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="src\GameData.txt">
       <Filter>Resource Files</Filter>
     </Text>

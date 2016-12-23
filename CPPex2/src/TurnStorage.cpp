@@ -1,5 +1,6 @@
 #include "TurnStorage.h"
 
+
 void TurnStorage::addTurn(std::shared_ptr<Turn> const& turn) {
 	turns.push_back(turn);
 }

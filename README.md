@@ -1,4 +1,5 @@
-# CPP Lab 3 ex2
-UNice M1 C++ Lab
+# CPP Project
+UNice M1 C++ 
 
-This is Lab#3 Ex2 using the singleton from my teacher.
+C++ Project 
+Build a Tower Defence game
