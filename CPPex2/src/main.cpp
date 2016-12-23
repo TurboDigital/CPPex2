@@ -27,13 +27,14 @@
 #include "MyGraphicEngine.h"
 #include "GameEventsObserver.h"
 #include "LoadGame.h"
+#include "Config.h"
 
 
 
 int main(int argc, char * argv[])
 {
 
-	LoadGame load(2,5);
+	LoadGame load(MAX_CHAPTER,MAX_LEVEL);
 	Game game(&load);
 	TurnStorage turnStorage(&game);
 	TurnStorage virtualTurnStorage(&game);

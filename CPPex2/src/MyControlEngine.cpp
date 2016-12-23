@@ -73,6 +73,7 @@ void MyControlEngine::MotionCallback(int x, int y){
 
 		game->selectedXPos = (float)(x / (width / 2.0f) - 1.0f) - squareSizeX / 2.0f;
 		game->selectedYPos = (float)-(y / (height / 2.0f) - 1.0f) - squareSizeY / 2.0f;
+		std::printf(" x = %lf y = %lf", game->selectedXPos, game->selectedYPos);
 	}
 }
 

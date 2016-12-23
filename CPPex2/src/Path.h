@@ -5,12 +5,12 @@ class Path {
 public:
 	Path(int * path_, int paths_):
 		path(path_),
-		paths(paths_)
+		size(paths_)
 	{};
 
 	virtual ~Path() {};
 
-	int paths;
+	int size;
 	int * path;
 
 	float getStartX();

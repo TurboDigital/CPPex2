@@ -62,6 +62,7 @@ int TurnStorage::getTurnAttack(int i, int j) {
 			return turns[k].get()->getAttack();
 		}
 	}
+	return -1;
 }
 int TurnStorage::getTurnAttackRate(int i, int j) {
 	for (unsigned int k = 0; k < turns.size(); k++) {
@@ -69,6 +70,7 @@ int TurnStorage::getTurnAttackRate(int i, int j) {
 			return turns[k].get()->getAttackRate();
 		}
 	}
+	return -1;
 }
 int TurnStorage::getTurnLevel(int i, int j) {
 	for (unsigned int k = 0; k < turns.size(); k++) {
@@ -76,6 +78,7 @@ int TurnStorage::getTurnLevel(int i, int j) {
 			return turns[k].get()->getLevel();
 		}
 	}
+	return -1;
 }
 
 bool TurnStorage::exists(int i, int j) {

@@ -72,26 +72,25 @@ void Game::startDraw() {
 	GraphicPrimitives::drawText2D("Start Game: Press G", -0.3f, 0.3f, 0.9f, .6f, .1f);
 	GraphicPrimitives::drawText2D("(to pause) : Press P", -0.3f, -0.2f, 0.9f, .6f, .1f);
 	GraphicPrimitives::drawText2D("(to restart) : Press R", -0.3f, -0.1f, 0.9f, .6f, .1f);
-	std::printf("DRAW START\n");
 }
 
 void Game::pauseDraw() {
 	GraphicPrimitives::drawFillRect2D(-1.0f, -1.0f, 2.0f, 2.0f, 0.2f, 0.2f, 0.4f, 0.6f);
 	GraphicPrimitives::drawText2D("PAUSED", -0.2f, 0.3f, 1.0f, .0f, .0f);
-	GraphicPrimitives::drawText2D("Resume game: Press P", -0.2f, 0.2f, 0.62f, .32f, .17f);
+	GraphicPrimitives::drawText2D("Resume game: Press p", -0.2f, 0.2f, 0.62f, .32f, .17f);
 }
 
 void Game::goToNextLevelDraw() {
 	char buffer[20], buffer1[20], buffer2[30];
 	if (level <= 5) {
-		sprintf_s(buffer, "Wave %d complete", level);
+		sprintf_s(buffer, "Wave %d complete", level - 1);
 		sprintf_s(buffer1, "CHAPTER %d ", currentChapter + 1);
-		sprintf_s(buffer2, "Next Wave: Press N ");
+		sprintf_s(buffer2, "Next Wave: Press n ");
 	}
 	else{
 		sprintf_s(buffer, "CHAPTER %d complete", currentChapter + 1);
 		sprintf_s(buffer1, "");
-		sprintf_s(buffer2, "Continue: Press N");
+		sprintf_s(buffer2, "Continue: Press n");
 	}
 	GraphicPrimitives::drawFillRect2D(-1.0f, -1.0f, 2.0f, 2.0f, 0.2f, 0.2f, 0.4f, 1.0f);
 	GraphicPrimitives::drawText2D(buffer1, -0.3f, 0.4f, .66f, .66f, .66f);
@@ -102,17 +101,17 @@ void Game::goToNextLevelDraw() {
 void Game::gameOverDraw() {
 	GraphicPrimitives::drawFillRect2D(-1.0f, -1.0f, 2.0f, 2.0f, 0.2f, 0.2f, 0.4f, 1.0f);
 	GraphicPrimitives::drawText2D("GAME OVER", -0.2f, 0.3f, 1.0f, .0f, .0f);
-	GraphicPrimitives::drawText2D("Restart Game: Press R", -0.3f, 0.2f, 0.62f, .32f, .17f);
-	GraphicPrimitives::drawText2D("Quit Game: Press Q", -0.3f, 0.1f, 0.62f, .32f, .17f);
+	GraphicPrimitives::drawText2D("Restart Game: Press r", -0.3f, 0.2f, 0.62f, .32f, .17f);
+	GraphicPrimitives::drawText2D("Quit Game: Press q", -0.3f, 0.1f, 0.62f, .32f, .17f);
 }
 void Game::gameWinDraw() {
 	char buffer[20], buffer1[20], buffer2[30];
 	sprintf_s(buffer, "Dev: Cociu Victor");
 	sprintf_s(buffer1, "Congrats you won!");
-	sprintf_s(buffer2, "Main menu: Press R");
+	sprintf_s(buffer2, "Main menu: Press r");
 	GraphicPrimitives::drawFillRect2D(-1.0f, -1.0f, 2.0f, 2.0f, 0.2f, 0.2f, 0.4f, 1.0f);
 	GraphicPrimitives::drawText2D(buffer1, -0.3f, 0.4f, .66f, .66f, .66f);
-	GraphicPrimitives::drawText2D(buffer, -0.3f, 0.3f, .66f, .66f, .66f);
+	GraphicPrimitives::drawText2D(buffer, -0.3f, -0.3f, .66f, .66f, .66f);
 	GraphicPrimitives::drawText2D(buffer2, -0.3f, 0.2f, 0.62f, .32f, .17f);
 }
 
@@ -216,7 +215,7 @@ bool Game::loadNextLevel() {
 }
 
 void Game::loadPath(int * path, int paths_) {
-	int paths = paths_;
+	int paths = paths_ / 2 - 1;
 	int lines = 0;
 	for (int k = 0; k < paths; k++) {
 
@@ -226,7 +225,7 @@ void Game::loadPath(int * path, int paths_) {
 		int endY = path[lines + 3];
 
 		if (startX == endX) {
-			if (startX < endY) {
+			if (startX <= endY) {
 				for (startY; startY <= endY; startY++)
 					grid[startY][startX] = ROAD;
 			}
@@ -236,7 +235,7 @@ void Game::loadPath(int * path, int paths_) {
 			}
 		}
 		if (startY == endY) {
-			if (startX < endX) {
+			if (startX <= endX) {
 				for (startX; startX <= endX; startX++)
 					grid[startY][startX] = ROAD;
 			}
@@ -260,7 +259,7 @@ void Game::loadPath(int * path, int paths_) {
 }
 
 void Game::reloadCurrentPath(){
-	loadPath(loadGame->loadedPaths[currentChapter].get()->path, loadGame->loadedPaths[currentChapter].get()->paths);
+	loadPath(loadGame->loadedPaths[currentChapter].get()->path, loadGame->loadedPaths[currentChapter].get()->size);
 }
 
 Path * Game::currentPath() {
@@ -278,8 +277,8 @@ void Game::restartGame() {
 	delete wave;
 	wave = NULL;
 	level = 1;
-	currentChapter = 0;
-	lifes = 20;
+	currentChapter = START_CHAPTER;
+	lifes = GAME_LIVES;
 	setStartMenu();
 	reloadCurrentPath();
 	gold = START_GOLD;

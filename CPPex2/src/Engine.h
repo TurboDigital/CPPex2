@@ -42,7 +42,7 @@ public:
         delete grE_;
         grE_ = grE;
     }
-    
+
     void start();
     
     static ControlEngine * crtE_;

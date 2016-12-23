@@ -3,15 +3,15 @@
 #include "Path.h"
 
 class Monstre {
-	int life, n, m;
+	int life, n, m, armor;
 	float x, y, vx, vy, r, g, b, speed;
 	Path * path;
 public:
-	Monstre(Path * path_, float xPos, float yPos, int monsterLife, float speed_, int n_, int m_, float r_, float g_, float b_) :
+	Monstre(Path * path_, float xPos, float yPos, int monsterLife, int armor_, float speed_, int n_, int m_, float r_, float g_, float b_) :
 		path(path_),
 		x(xPos),	y(yPos),
 		vx(0.0f),	vy(0.0f),
-		speed(speed_),
+		speed(speed_),	armor(armor_),
 		n(n_),	m(m_),
 		r(r_),	g(g_),	b(b_),
 		life(monsterLife),

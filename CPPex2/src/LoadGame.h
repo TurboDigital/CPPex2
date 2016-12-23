@@ -11,15 +11,8 @@ public:
 		totalChapters(chapter_),
 		wavesPerChapter(waves_)
 		{
-		addPath(std::make_shared<Path>(Path(myPath, 5)));
-		addPath(std::make_shared<Path>(Path(myPath1, 5)));
-
-		setWave(0, 100, 10, 20);
-		setWave(1, 130, 15, 20);
-		setWave(2, 140, 20, 20);
-		setWave(3, 150, 25, 20);
-		setWave(4, 160, 30, 20);
-
+		readDataFromFile();
+		setAllDataFromFile();
 	};
 
 	int myPath[12] = {0,4,5,4,5,7,12,7,12,2,2,2};
@@ -27,7 +20,7 @@ public:
 
 	int totalChapters;
 	int wavesPerChapter;
-
+	
 	typedef std::vector<int> MonsterType;
 	typedef std::vector<MonsterType> Level;
 
@@ -36,12 +29,23 @@ public:
 	typedef std::vector<std::shared_ptr<Path>> LoadedPaths;
 	LoadedPaths loadedPaths;
 
-	
+	typedef std::vector<int> Row;
+	typedef std::vector<Row> PathMatrix;
+
+	PathMatrix pathMatrix;
+	PathMatrix waveMatrix;
+
+	void readDataFromFile();
 	void addPath(std::shared_ptr<Path> const& path);
 	void setWave(int wave_, int life_, int speed_, int armor);
+	void setAllDataFromFile();
 
 	int getLife(int wave_);
 	float getSpeed(int wave_);
 	int getArmor(int wave_);
+
+	void LoadGame::split(const std::string &s, char delim, std::vector<std::string> &elems);
+	std::vector<std::string> LoadGame::split(const std::string &s, char delim);
+	
 	
 };

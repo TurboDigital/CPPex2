@@ -2,7 +2,7 @@
 
 void Wave::createWave(int level, int life_, float speed_, int armor){
 	if (monstreCount > 0 && frequence == 0) {
-		monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(path,path->getStartX(), path->getStartY(), life_, speed_, N, M, 7.0f, 7.0f, 0.0f)));
+		monstreStorage.addMonstre(std::make_shared<Monstre>(Monstre(path,path->getStartX(), path->getStartY(), life_, armor, speed_, N, M, 7.0f, 7.0f, 0.0f)));
 		monstreCount--;
 		frequence = MONSTRE_WAVE_FREQUENCE;
 		std::printf("MONSTRE ADDED\n");

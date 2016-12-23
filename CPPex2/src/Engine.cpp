@@ -109,16 +109,18 @@ void Engine::graphicBoot(){
     glutReshapeFunc(ReshapeCallback);
 }
 
+
 //GameEngine
 void IdleCallback(void){
     Engine::gmE_->idle();
-    glutPostRedisplay();
+	glutPostRedisplay();
 }
 
 
 void Engine::gameBoot(){
     glutIdleFunc(IdleCallback);
 }
+
 
 
 //Engine
@@ -142,16 +144,20 @@ Engine::Engine(int argc, char * argv[],int width,int height,char * title){
     
     //suppression de la repetitions des touche
     glutIgnoreKeyRepeat( true );
-    
     controlBoot();
     graphicBoot();
     gameBoot();
+
+	
     
 }
 
 void Engine::start(){
-    glutMainLoop();
+
+	glutMainLoop();
+    
 }
+
 
 ControlEngine * Engine::crtE_ = new ControlEngine();
 GameEngine * Engine::gmE_ = new GameEngine();

@@ -81,7 +81,8 @@ void GameEventsObserver::addTurnPlaces(int i, int j) {
 void GameEventsObserver::checkNoneCaseAndAddTurn(int i, int j) {
 	if (i >= 0 && j <= game->m && i < 10 && j >= 0) {
 		if (game->grid[i][j] == Game::CreatureType::TURN) {
-			virtualTrunStorage->addTurn(std::make_shared<Turn>(Turn(game,j, i, game->n, game->m, 0.23f, 0.70f, 0.44f, 0.6f)));
+			//if(!virtualTrunStorage->exists(j, i))
+			virtualTrunStorage->addTurn(std::make_shared<Turn>(Turn(game,j, i, game->n, game->m, 0.67f, 1.0f, 0.18f, 0.2f)));
 		}
 	}
 }

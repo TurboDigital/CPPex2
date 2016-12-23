@@ -14,12 +14,12 @@ public:
 		window_height(WINDOW_HEIGHT),
 		pause(false), gameOver(false), gameStarted(false), nextLevelMenu(false), chapterEnded(false), gameWin(false),
 		countMonstres(0),
-		level(START_LEVEL), currentChapter(1),
+		level(START_LEVEL), currentChapter(START_CHAPTER),
 		wave(NULL), loadGame(load_),
 		n(N), m(M),
 		grid(n, Row(m)),
 		selectedXPos(0.0f), selectedYPos(0.0f),
-		isSelected(false), lifes(20),
+		isSelected(false), lifes(GAME_LIVES),
 		clickTowerI(-1), clickTowerJ(-1), clicked(false),
 		gold(START_GOLD)
 	{}
